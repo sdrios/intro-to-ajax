@@ -71,6 +71,24 @@
   //
 
   // TODO: your code goes here :)
+  $('#generateDoggoBtn').click(clickDoggo)
+
+  function clickDoggo(){
+    request = $.getJSON('https://dog.ceo/api/breeds/image/random', function(response){
+      let breedURL = response.message
+      $("#doggoContainer").html(`<img src="${breedURL}" width="300">`)
+    })
+
+    $('#generateDoggoBtn').text("Generating").attr("disabled",true)
+    $('#doggoContainer > img')[0].onload=imgLoad()
+  
+  }
+
+
+function imgLoad(){
+  $('#generateDoggoBtn').text("Generate Doggo!").attr("disabled",false)
+  }
+  
 
   //
   // Cool. Now let's kick it up a notch and allow selecting a specific breed of dog!
@@ -107,7 +125,14 @@
   //
 
   // TODO: your code goes here :)
+    $.ajax("https://dog.ceo/api/breeds/list", {success: function(response){
+    //console.log(response)
+    let breeds = response.message
+    breeds.forEach(function(breed){
+       $("#selectBreedDropdown").append(`<option value="${breed}">${breed}</option>`)
 
+    })
+    }})
   //
   // Excellent work!
   //
