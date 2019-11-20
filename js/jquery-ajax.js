@@ -39,33 +39,33 @@
   // Next up you will use jQuery AJAX methods to fetch some things from the dog.ceo website.
   // Check out the dog.ceo API here: https://dog.ceo/dog-api/
   //
-  // 1) Add a click event to the "Generate Doggo" button
+  // D 1) Add a click event to the "Generate Doggo" button
   //
-  // 2) In your event handler, make an AJAX request to https://dog.ceo/api/breeds/image/random
+  // D 2) In your event handler, make an AJAX request to https://dog.ceo/api/breeds/image/random
   //    which will return JSON data.
   //    Hint: there is a very convenient jQuery method for getting JSON data
   //
-  // 3) Look at the Network tab in Chrome Dev Tools and confirm that an HTTP request
+  // D 3) Look at the Network tab in Chrome Dev Tools and confirm that an HTTP request
   //    is being sent every time you click the "Generate Doggo" button.
   //
-  // 4) When the button is clicked, change the button text to "Generating Doggo …"
+  // D 4) When the button is clicked, change the button text to "Generating Doggo …"
   //    and add the "disabled" attribute to the button so it is no longer clickable.
   //    Hint: jQuery has methods for changing DOM attributes: http://api.jquery.com/attr/
   //
-  // 5) The callback function for your AJAX request takes three parameters (function arguments).
+  // D 5) The callback function for your AJAX request takes three parameters (function arguments).
   //    The first argument is the data returned from the request. Note that jQuery took the raw
   //    JSON response text and did JSON.parse() to deserialize the data for you (convenient, right?).
   //
-  //    In the data returned from the request there should be an image URL to a random dog picture.
+  //   D) In the data returned from the request there should be an image URL to a random dog picture.
   //    Add an <img> tag inside the <div id="doggoContainer"> element with a "src" attribute pointing to that picture.
   //    Hint: jQuery has methods for DOM creation and insertion
   //          http://api.jquery.com/jQuery/#jQuery-html-ownerDocument
   //          https://api.jquery.com/category/manipulation/dom-insertion-inside/
   //
-  // 6) When the request is finished, make sure to change the button text back to "Generate Doggo"
+  // D 6) When the request is finished, make sure to change the button text back to "Generate Doggo"
   //    and remove the "disabled" attribute so the button is clickable again.
   //
-  // 7) When the button is clicked again, it should fetch another dog and replace the image
+  // D 7) When the button is clicked again, it should fetch another dog and replace the image
   //    inside of <div id="doggoContainer">. There should be a loop where you click the button,
   //    get a new dog, click the button, get a new dog, etc.
   //
@@ -73,36 +73,32 @@
   // TODO: your code goes here :)
   $('#generateDoggoBtn').click(clickDoggo)
 
-  function clickDoggo(){
-    request = $.getJSON('https://dog.ceo/api/breeds/image/random', function(response){
-      let breedURL = response.message
-      $("#doggoContainer").html(`<img src="${breedURL}" width="300">`)
-    })
-
+   function clickDoggo(){
     $('#generateDoggoBtn').text("Generating").attr("disabled",true)
-    $('#doggoContainer > img')[0].onload=imgLoad()
-  
+
+    request = $.getJSON('https://dog.ceo/api/breeds/image/random', function(response){
+        $('#generateDoggoBtn').text("Generate Doggo!").attr("disabled",false)
+        let breedURL = response.message
+        $("#doggoContainer").html(`<img src="${breedURL}" width="300">`)
+    })
   }
 
 
-function imgLoad(){
-  $('#generateDoggoBtn').text("Generate Doggo!").attr("disabled",false)
-  }
   
 
   //
   // Cool. Now let's kick it up a notch and allow selecting a specific breed of dog!
   //
-  // 1) Add an empty dropdown menu (ie: <select></select>) to the <div id="selectBreedContainer"> element.
+  // D 1) Add an empty dropdown menu (ie: <select></select>) to the <div id="selectBreedContainer"> element.
   //
-  // 2) Using a *different* jQuery AJAX method than you used in the above example, make a
+  // D 2) Using a *different* jQuery AJAX method than you used in the above example, make a
   //    GET request to https://dog.ceo/api/breeds/list when the page first loads.
   //
   //    For example, if you used $.getJSON() above, try out $.ajax() for this exercise.
   //
   //    Hint: check out the $.ready() method https://api.jquery.com/ready/
   //
-  // 3) Confirm that this AJAX request shows up in the Network tab everytime you reload the page
+  // D 3) Confirm that this AJAX request shows up in the Network tab everytime you reload the page
   //
   // 4) In the callback function for that GET request there should be an array of dog breeds.
   //    For each breed, add an <option value="poodle">Poodle</option> to your <select> menu.
@@ -125,14 +121,15 @@ function imgLoad(){
   //
 
   // TODO: your code goes here :)
-    $.ajax("https://dog.ceo/api/breeds/list", {success: function(response){
-    //console.log(response)
-    let breeds = response.message
-    breeds.forEach(function(breed){
-       $("#selectBreedDropdown").append(`<option value="${breed}">${breed}</option>`)
-
+   $(document).ready( $.ajax("https://dog.ceo/api/breeds/list", {success: function(response){
+        //console.log(response)
+        let breeds = response.message
+        breeds.forEach(function(breed){
+          $("#selectBreedDropdown").append(`<option value="${breed}">${breed}</option>`)
+        })
+      }
     })
-    }})
+   )
   //
   // Excellent work!
   //
